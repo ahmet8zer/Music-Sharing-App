@@ -8,4 +8,6 @@
     <string name="login_button">login</string>
     <string name="signup_text">Don\'t have and account?</string>
     <string name="signup_button">Sign Up</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="first_fragment">Our first fragment</string>
 </resources>
