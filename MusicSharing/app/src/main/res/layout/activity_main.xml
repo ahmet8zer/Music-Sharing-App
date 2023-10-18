@@ -21,38 +21,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:paddingLeft="30dp"
-            android:text="@string/username_text" />
 
-        <EditText
-            android:id="@+id/username_field"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/first_fragment"
+            android:name="com.example.musicsharing.FirstFragment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/username_hint"
-            android:inputType="text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:text="@string/password_text" />
-
-        <EditText
-            android:id="@+id/password_field"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword" />
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_first" />
 
 
         <LinearLayout
@@ -91,12 +66,7 @@
 
     </LinearLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/first_fragment"
-        android:name="com.example.musicsharing.FirstFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_first" />
+
 
 
 </LinearLayout>
