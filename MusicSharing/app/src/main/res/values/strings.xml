@@ -6,8 +6,12 @@
     <string name="password_text">Password</string>
     <string name="password_hint">Enter Password...</string>
     <string name="login_button">login</string>
+    <string name="back_to_login_button">Back to\nlogin</string>
     <string name="signup_text">Don\'t have and account?</string>
     <string name="signup_button">Sign Up</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="delete_profile">delete profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="first_fragment">Our first fragment</string>
+    <string name="created_account">Created Account</string>
 </resources>

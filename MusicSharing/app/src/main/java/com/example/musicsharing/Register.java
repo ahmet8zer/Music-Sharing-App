@@ -49,7 +49,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        mLoginButton.setEnabled(false);
+        //mLoginButton.setEnabled(false);
         mSigninButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Does nothing yet, but soon!
-                mLoginButton.setText("pushed button!");
+                //right now it just takes you straight to the profile activity
+                Toast.makeText(getApplicationContext(), "You logged in!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
+                finish();
             }
         });
         mSignupButton = (Button) findViewById(R.id.signup_button);
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mUsername = (EditText) findViewById(R.id.username_field);
         mPassword = (EditText) findViewById(R.id.password_field);
+
     }
 
 
