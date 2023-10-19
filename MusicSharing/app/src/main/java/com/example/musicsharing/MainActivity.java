@@ -2,6 +2,7 @@ package com.example.musicsharing;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         mSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Does nothing yet, but soon!
+                Intent intent = new Intent(getApplicationContext(), Register.class);
+                startActivity(intent);
+                finish();
             }
         });
         mUsername = (EditText) findViewById(R.id.username_field);
