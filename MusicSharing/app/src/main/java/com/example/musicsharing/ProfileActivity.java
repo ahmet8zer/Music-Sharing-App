@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private Button mEditProfileButton, mDeleteProfileButton, mAddPostButton;
 
@@ -47,7 +47,7 @@ public class Profile extends AppCompatActivity {
         mEditProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -74,7 +74,7 @@ public class Profile extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d("TAG", "Your account has been deleted.");
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             finish();
 

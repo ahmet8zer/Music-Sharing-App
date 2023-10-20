@@ -49,7 +49,7 @@ public class AddPostActivity extends AppCompatActivity {
                 caption = mCaptionText.getText().toString();
 
                 uploadPost(caption, user, db);
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
                 finish();
             }
