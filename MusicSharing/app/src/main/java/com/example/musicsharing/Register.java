@@ -74,6 +74,11 @@ public class Register extends AppCompatActivity {
                                     Toast.makeText(Register.this, "Created Account",
                                             Toast.LENGTH_SHORT).show();
                                     mLoginButton.setEnabled(true);
+
+                                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                                    startActivity(intent);
+                                    finish();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(Register.this, "Authentication failed.",
