@@ -33,6 +33,13 @@
             android:backgroundTint="#CC2222"
             android:text="@string/delete_profile" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPosts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+
         <Button
             android:id="@+id/add_post_button"
             android:layout_width="wrap_content"

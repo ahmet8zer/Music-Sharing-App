@@ -9,11 +9,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -32,6 +37,15 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        RecyclerView rv = findViewById(R.id.rvPosts);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        List<Post> posts = new ArrayList<Post>();
+        posts.add(new Post("Hello", "Adele, 25", "I really love this song because...", R.drawable.hello));
+        posts.add(new Post("Some Song", "This is what will happen if it doesn\'t have an image", "small caption",R.drawable.blankrecord));
+        posts.add(new Post("Hello", "Adele, 25", "large caption alkdjflkajsdlfkj asdkjflk asdklfj kals jdflkjalskd flj askdjflk asdjkf klajsdlkfjlksajlkdjf asjldfjk asdjk flkajsdlfjk akl sjdfjalkjs df jaslk djf kjaskldjfkljasdkjflkja sdkj fklajs dkl fjaklj sdfkj askd jfkjljasjflka sjdlkf jaskljd fkjlaskljdfaksjdfkjl asdkljfakj sd fljlkdas", R.drawable.hello));
+
+        rv.setAdapter(new MyAdapter(getApplicationContext(),posts));
 
         mDisplayName = (TextView) findViewById(R.id.display_name);
         if(user != null){
