@@ -14,4 +14,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="first_fragment">Our first fragment</string>
     <string name="created_account">Created Account</string>
+    <string name="search_song">Find song</string>
 </resources>

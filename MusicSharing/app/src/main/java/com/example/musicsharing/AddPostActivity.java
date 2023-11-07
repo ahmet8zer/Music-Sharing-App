@@ -27,6 +27,8 @@ public class AddPostActivity extends AppCompatActivity {
     private EditText mCaptionText;
     private Button mPostButton;
 
+    private Button mFindSongButton;
+
     private FirebaseFirestore db;
 
     private FirebaseUser user;
@@ -39,6 +41,7 @@ public class AddPostActivity extends AppCompatActivity {
         mCaptionText = (EditText) findViewById(R.id.add_post_caption);
         mPostButton = (Button) findViewById(R.id.post_the_post_button);
         mSongSelect = findViewById(R.id.add_post_song);
+        mFindSongButton =(Button) findViewById(R.id.search_song_button);
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mPostButton.setOnClickListener(new View.OnClickListener() {
@@ -47,9 +50,21 @@ public class AddPostActivity extends AppCompatActivity {
                 //add the song and caption to database
                 String caption;
                 caption = mCaptionText.getText().toString();
-
                 uploadPost(caption, user, db);
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mFindSongButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                String query = mSongSelect.getText().toString();
+                Bundle bundle = new Bundle();
+                bundle.putString("query", query);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
