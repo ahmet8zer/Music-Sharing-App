@@ -37,6 +37,12 @@
             android:inputType="textAutoComplete"
             android:layout_margin="16dp"/>
 
+        <Button
+            android:id="@+id/search_song_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_song" />
+
         <EditText
             android:id="@+id/add_post_caption"
             android:layout_width="match_parent"
