@@ -42,13 +42,13 @@ public class ProfileActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         List<Post> posts = new ArrayList<Post>();
         posts.add(new Post("Hello", "Adele, 25", "I really love this song because...", R.drawable.hello));
-        posts.add(new Post("Some Song", "This is what will happen if it doesn\'t have an image", "small caption",R.drawable.blankrecord));
+        posts.add(new Post("Some Song", "This is what will happen if it doesn\'t have an image", "small caption", R.drawable.blankrecord));
         posts.add(new Post("Hello", "Adele, 25", "large caption alkdjflkajsdlfkj asdkjflk asdklfj kals jdflkjalskd flj askdjflk asdjkf klajsdlkfjlksajlkdjf asjldfjk asdjk flkajsdlfjk akl sjdfjalkjs df jaslk djf kjaskldjfkljasdkjflkja sdkj fklajs dkl fjaklj sdfkj askd jfkjljasjflka sjdlkf jaskljd fkjlaskljdfaksjdfkjl asdkljfakj sd fljlkdas", R.drawable.hello));
 
-        rv.setAdapter(new MyAdapter(getApplicationContext(),posts));
+        rv.setAdapter(new MyAdapter(getApplicationContext(), posts));
 
         mDisplayName = (TextView) findViewById(R.id.display_name);
-        if(user != null){
+        if (user != null) {
             mDisplayName.setText(user.getDisplayName());
         }
         mEditProfileButton = (Button) findViewById(R.id.edit_profile_button);
@@ -97,17 +97,6 @@ public class ProfileActivity extends AppCompatActivity {
                 });
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

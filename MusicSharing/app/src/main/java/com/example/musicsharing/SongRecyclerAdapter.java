@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,11 +19,14 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
 
     private Data songs;
 
+    private OnItemClickListener mListener;
 
 
-    public SongRecyclerAdapter(Context context, Data songs){
+
+    public SongRecyclerAdapter(Context context, Data songs, OnItemClickListener listener){
         this.mContext = context;
         this.songs = songs;
+        this.mListener = listener;
     }
     public void setSongs(Data songs) {
         this.songs = songs;
@@ -38,9 +42,21 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SongRecyclerAdapter.ViewHolder holder, int position) {
+        final Data.Song item = songs.getSongs().get(position);
         holder.tvTitle.setText(songs.getSongs().get(position).getTitle().toString());
         holder.tvArtist.setText(songs.getSongs().get(position).getArtist().getName().toString());
         Glide.with(mContext).load(songs.getSongs().get(position).getAlbum().getCover()).apply(RequestOptions.centerCropTransform()).into(holder.mImageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClick(item);
+            }
+        });
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Data.Song item);
     }
 
     @Override

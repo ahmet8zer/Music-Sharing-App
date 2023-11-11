@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 
@@ -37,7 +39,17 @@ public class SearchActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mSongRecyclerAdapter = new SongRecyclerAdapter(getApplicationContext(),songList);
+        mSongRecyclerAdapter = new SongRecyclerAdapter(getApplicationContext(), songList, new SongRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Data.Song item) {
+                Intent data = new Intent();
+                data.putExtra("Song", item.getTitle());
+                data.putExtra("Artist", item.getArtist().getName());
+                data.putExtra("Url", item.getAlbum().getCover());
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
         mRecyclerView.setAdapter(mSongRecyclerAdapter);
         RetrofitInterface apiService = RetrofitClient.getClient().create(RetrofitInterface.class);
         Call<Data> call = apiService.getSongs(query);

@@ -29,6 +29,10 @@ public class AddPostActivity extends AppCompatActivity {
 
     private Button mFindSongButton;
 
+    private String song;
+    private String artist;
+    private String cover;
+
     private FirebaseFirestore db;
 
     private FirebaseUser user;
@@ -65,15 +69,9 @@ public class AddPostActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("query", query);
                 intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1);
             }
         });
-
-
-
-
-
 
 
 
@@ -82,15 +80,15 @@ public class AddPostActivity extends AppCompatActivity {
     private void uploadPost(String caption, @NonNull FirebaseUser user, FirebaseFirestore db){
         post = new HashMap<>();
         post.put("uid", user.getUid());
-        if(!user.getDisplayName().isEmpty()){
+        if(user.getDisplayName() != null  && !user.getDisplayName().isEmpty()){
             post.put("author", user.getDisplayName());
         }else{
             post.put("author", user.getEmail());
         }
-        post.put("title", "Test Post");
+        post.put("title", song);
         post.put("caption", caption);
-        post.put("album", "Test Album");
-        post.put("artist", "Fake Artist");
+        post.put("artist", artist);
+        post.put("cover", cover);
 
         db.collection("users").document(user.getUid()).collection("posts").add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -109,5 +107,20 @@ public class AddPostActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode ==1){
+            if(resultCode == RESULT_OK){
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                db = FirebaseFirestore.getInstance();
+                song = data.getStringExtra("Song");
+                artist = data.getStringExtra("Artist");
+                cover = data.getStringExtra("Url");
+                Toast.makeText(getApplicationContext(), "Clicked on:" + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
