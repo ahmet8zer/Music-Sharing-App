@@ -4,10 +4,10 @@ public class Post {
     String songname;
     String album_artist;
     String caption;
-    int image;
+    String image;
 
 
-    public Post(String songname, String album_artist, String caption, int image) {
+    public Post(String songname, String album_artist, String caption, String image) {
         this.songname = songname;
         this.album_artist = album_artist;
         this.caption = caption;
@@ -38,11 +38,11 @@ public class Post {
         this.caption = caption;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

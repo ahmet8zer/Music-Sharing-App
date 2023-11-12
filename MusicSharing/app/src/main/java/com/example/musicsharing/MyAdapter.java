@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -28,7 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.imageview.setImageResource(posts.get(position).getImage());
+        Picasso.get().load(posts.get(position).getImage()).into(holder.imageview);
 
         holder.nameview.setText(posts.get(position).getSongname());
         holder.artistalbumview.setText(posts.get(position).getAlbum_artist());

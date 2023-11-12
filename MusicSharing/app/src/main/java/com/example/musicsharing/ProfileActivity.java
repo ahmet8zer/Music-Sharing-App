@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
                             String artist = document.getString("artist");
                             String cover = document.getString("cover");
 
-                            posts.add(new Post(title, artist, caption, R.drawable.hello));
+                            posts.add(new Post(title, artist, caption, cover));
                         }
 
                         rv.setAdapter(new MyAdapter(getApplicationContext(), posts));
@@ -95,6 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         //posts.add(new Post("Some Song", "This is what will happen if it doesn\'t have an image", "small caption", R.drawable.blankrecord));
         //posts.add(new Post("Hello", "Adele, 25", "large caption alkdjflkajsdlfkj asdkjflk asdklfj kals jdflkjalskd flj askdjflk asdjkf klajsdlkfjlksajlkdjf asjldfjk asdjk flkajsdlfjk akl sjdfjalkjs df jaslk djf kjaskldjfkljasdkjflkja sdkj fklajs dkl fjaklj sdfkj askd jfkjljasjflka sjdlkf jaskljd fkjlaskljdfaksjdfkjl asdkljfakj sd fljlkdas", R.drawable.hello));
 
+        //idk why but I think this line doesn't execute
         rv.setAdapter(new MyAdapter(getApplicationContext(), posts));
 
         mDisplayName = (TextView) findViewById(R.id.display_name);
