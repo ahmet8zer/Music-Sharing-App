@@ -2,6 +2,7 @@ package com.example.musicsharing;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_post,parent,false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_post, parent, false);
+        return new MyViewHolder(view, (ProfileActivity) parent.getContext());
     }
 
     @Override

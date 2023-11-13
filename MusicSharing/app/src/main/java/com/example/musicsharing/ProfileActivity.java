@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements MyViewHolder.OnItemClickListener{
 
     private Button mEditProfileButton, mDeleteProfileButton, mAddPostButton;
 
@@ -149,5 +149,22 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onEditClick(int position, String caption) {
+        Intent intent = new Intent(getApplicationContext(), EditPostActivity.class);
+        intent.putExtra("caption", caption);
+        intent.putExtra("position", position);
+        startActivity(intent);
+        finish();
+
+    }
+
+    @Override
+    public void onDeleteClick() {
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
