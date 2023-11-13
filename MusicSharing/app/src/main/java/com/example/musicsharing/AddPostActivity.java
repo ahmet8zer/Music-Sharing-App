@@ -3,14 +3,21 @@ package com.example.musicsharing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +32,13 @@ public class AddPostActivity extends AppCompatActivity {
 
     private AutoCompleteTextView mSongSelect;
     private EditText mCaptionText;
+
     private Button mPostButton;
 
     private Button mFindSongButton;
+
+    private Button mLocationButton;
+    private LocationRequest locationRequest;
 
     private String song;
     private String artist;
@@ -44,10 +55,16 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
         mCaptionText = (EditText) findViewById(R.id.add_post_caption);
         mPostButton = (Button) findViewById(R.id.post_the_post_button);
+        mLocationButton = (Button) findViewById(R.id.get_location_button);
         mSongSelect = findViewById(R.id.add_post_song);
         mFindSongButton =(Button) findViewById(R.id.search_song_button);
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,8 +90,46 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
+        mLocationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if (GPSEnabled()){
+                    LocationServices.getFusedLocationProviderClient(AddPostActivity.this).requestLocationUpdates(locationRequest, new LocationCallback(){
+                        @Override
+                        public void onLocationResult(@NonNull LocationResult locationResult) {
+                            super.onLocationResult(locationResult);
 
+                            LocationServices.getFusedLocationProviderClient(AddPostActivity.this).removeLocationUpdates(this);
 
+                            if(locationResult != null && locationResult.getLocations().size() > 0){
+                                double latitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLatitude();
+                                double longitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLongitude();
+
+                                mLocationButton.setText("Added Location: " + latitude + longitude);
+                            }
+                        }
+
+                    }, Looper.getMainLooper());
+
+                }else{
+                    mLocationButton.setText("Please enable location tracking on your device to use this feature.");
+                }
+            }
+        });
+
+    }
+
+    private boolean GPSEnabled(){
+        LocationManager lm = null;
+        boolean isEnabled = false;
+
+        if (lm == null){
+            lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        }
+
+        isEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        return isEnabled;
     }
 
     private void uploadPost(String caption, @NonNull FirebaseUser user, FirebaseFirestore db){
