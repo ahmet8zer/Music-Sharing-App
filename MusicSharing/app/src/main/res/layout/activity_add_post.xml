@@ -17,7 +17,7 @@
             android:layout_marginTop="30dp"
             android:paddingBottom="36dp"
             android:layout_gravity="center"
-            android:text="Add Post"
+            android:text="New Post"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:paddingLeft="30dp"
-            android:text="Song Select" />
+            android:text="Add song" />
 
         <AutoCompleteTextView
             android:id="@+id/add_post_song"
@@ -49,7 +49,7 @@
             android:layout_height="150dp"
             android:gravity="top"
             android:layout_margin="16dp"
-            android:hint="Caption..."
+            android:hint="Write a caption..."
             android:inputType="text" />
 
         <Button
