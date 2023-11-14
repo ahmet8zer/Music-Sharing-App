@@ -167,7 +167,8 @@ public class AddPostActivity extends AppCompatActivity {
     private void requestLocationUpdates() {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000); // 5 seconds
+        locationRequest.setNumUpdates(1);
+        locationRequest.setInterval(0);
 
         mFusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,
@@ -184,15 +185,17 @@ public class AddPostActivity extends AppCompatActivity {
                             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                             try {
                                 addrs = geocoder.getFromLocation(latitude, longitude, 1);
-                                mCityName = addrs.get(0).getAddressLine(0);
+                                mCityName = addrs.get(0).getLocality();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                             Toast.makeText(
                                     AddPostActivity.this,
-                                    "Location: " + latitude + ", " + longitude,
+                                    "Location added" ,
                                     Toast.LENGTH_SHORT
                             ).show();
+
+                            mFusedLocationProviderClient.removeLocationUpdates(this);
                         }
                     }
                 },
