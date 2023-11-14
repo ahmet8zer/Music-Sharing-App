@@ -7,6 +7,7 @@ public class Post {
     String image;
 
 
+
     public Post(String songname, String album_artist, String caption, String image) {
         this.songname = songname;
         this.album_artist = album_artist;
@@ -45,4 +46,5 @@ public class Post {
     public void setImage(String image) {
         this.image = image;
     }
+
 }

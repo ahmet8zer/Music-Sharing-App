@@ -105,7 +105,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 double latitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLatitude();
                                 double longitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLongitude();
 
-                                mLocationButton.setText("Added Location: " + latitude + longitude);
+                                mLocationButton.setText("Added Location: Columbus");
                             }
                         }
 
