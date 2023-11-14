@@ -2,18 +2,24 @@ package com.example.musicsharing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import android.content.Context;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.location.LocationManager;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -25,13 +31,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class AddPostActivity extends AppCompatActivity {
 
     private AutoCompleteTextView mSongSelect;
     private EditText mCaptionText;
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 123;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+
+    private String mCityName;
+
+    private List<Address> addrs;
 
     private Button mPostButton;
 
@@ -61,6 +77,7 @@ public class AddPostActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);
@@ -90,46 +107,13 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
-        mLocationButton.setOnClickListener(new View.OnClickListener(){
+        mLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                if (GPSEnabled()){
-                    LocationServices.getFusedLocationProviderClient(AddPostActivity.this).requestLocationUpdates(locationRequest, new LocationCallback(){
-                        @Override
-                        public void onLocationResult(@NonNull LocationResult locationResult) {
-                            super.onLocationResult(locationResult);
-
-                            LocationServices.getFusedLocationProviderClient(AddPostActivity.this).removeLocationUpdates(this);
-
-                            if(locationResult != null && locationResult.getLocations().size() > 0){
-                                double latitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLatitude();
-                                double longitude = locationResult.getLocations().get(locationResult.getLocations().size() - 1).getLongitude();
-
-                                mLocationButton.setText("Added Location: " + latitude + longitude);
-                            }
-                        }
-
-                    }, Looper.getMainLooper());
-
-                }else{
-                    mLocationButton.setText("Please enable location tracking on your device to use this feature.");
-                }
+            public void onClick(View view) {
+                currLocation(view);
             }
         });
 
-    }
-
-    private boolean GPSEnabled(){
-        LocationManager lm = null;
-        boolean isEnabled = false;
-
-        if (lm == null){
-            lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        }
-
-        isEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        return isEnabled;
     }
 
     private void uploadPost(String caption, @NonNull FirebaseUser user, FirebaseFirestore db){
@@ -144,6 +128,9 @@ public class AddPostActivity extends AppCompatActivity {
         post.put("caption", caption);
         post.put("artist", artist);
         post.put("cover", cover);
+        if(mCityName != null){
+            post.put("city", mCityName);
+        }
 
         db.collection("users").document(user.getUid()).collection("posts").add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -162,6 +149,75 @@ public class AddPostActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void currLocation(View view){
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE
+            );
+        }else{
+            requestLocationUpdates();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void requestLocationUpdates() {
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000); // 5 seconds
+
+        mFusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                new LocationCallback() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        Location location = locationResult.getLastLocation();
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+
+                            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                            try {
+                                addrs = geocoder.getFromLocation(latitude, longitude, 1);
+                                mCityName = addrs.get(0).getAddressLine(0);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            Toast.makeText(
+                                    AddPostActivity.this,
+                                    "Location: " + latitude + ", " + longitude,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+                },
+                null
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                requestLocationUpdates();
+            } else {
+                Toast.makeText(
+                        this,
+                        "Location permission denied. Cannot get location.",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        }
     }
 
     @Override
