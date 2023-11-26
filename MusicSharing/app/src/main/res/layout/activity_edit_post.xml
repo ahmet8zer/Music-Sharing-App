@@ -12,6 +12,14 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
+        <Button
+            android:id="@+id/back_button_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="back"
+            tools:ignore="MissingConstraints" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

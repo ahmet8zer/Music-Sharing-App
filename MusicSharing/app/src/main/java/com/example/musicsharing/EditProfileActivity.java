@@ -18,7 +18,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private Button mSaveEditButton;
+    private Button mSaveEditButton, backbutton;
 
     private EditText mEditText;
 
@@ -33,6 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mEditText = (EditText) findViewById(R.id.edit_bio_field);
+        backbutton = findViewById(R.id.back_button);
 
         if(user != null){
             mEditText.setText(user.getDisplayName());
@@ -63,6 +64,22 @@ public class EditProfileActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
+
+            }
+        });
+
+
+
+
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
 
 
             }
