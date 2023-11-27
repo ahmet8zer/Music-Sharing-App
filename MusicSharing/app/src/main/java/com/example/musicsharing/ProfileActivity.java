@@ -75,8 +75,9 @@ public class ProfileActivity extends AppCompatActivity implements MyViewHolder.O
                             String caption = document.getString("caption");
                             String artist = document.getString("artist");
                             String cover = document.getString("cover");
+                            String cityname = document.getString("city");
 
-                            posts.add(new Post(title, artist, caption, cover));
+                            posts.add(new Post(title, artist, caption, cover,cityname));
                         }
 
                         rv.setAdapter(new MyAdapter(getApplicationContext(), posts));

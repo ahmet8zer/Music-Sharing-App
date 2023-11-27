@@ -6,13 +6,16 @@ public class Post {
     String caption;
     String image;
 
+    String location;
 
 
-    public Post(String songname, String album_artist, String caption, String image) {
+
+    public Post(String songname, String album_artist, String caption, String image, String location) {
         this.songname = songname;
         this.album_artist = album_artist;
         this.caption = caption;
         this.image = image;
+        this.location = location;
     }
 
     public String getSongname() {
@@ -21,6 +24,14 @@ public class Post {
 
     public void setSongname(String songname) {
         this.songname = songname;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getAlbum_artist() {

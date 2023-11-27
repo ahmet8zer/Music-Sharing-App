@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imageview;
-    TextView nameview, artistalbumview, captionview;
+    TextView nameview, artistalbumview, captionview, locationview;
 
     private FirebaseFirestore db;
 
@@ -42,6 +42,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         this.context = itemView.getContext();
         imageview = itemView.findViewById(R.id.imageview);
         nameview = itemView.findViewById(R.id.songname);
+        locationview = itemView.findViewById(R.id.city_location);
         artistalbumview = itemView.findViewById(R.id.album_artist);
         captionview = itemView.findViewById(R.id.caption);
         threedots = itemView.findViewById(R.id.three_dots_button);

@@ -37,6 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.nameview.setText(posts.get(position).getSongname());
         holder.artistalbumview.setText(posts.get(position).getAlbum_artist());
         holder.captionview.setText(posts.get(position).getCaption());
+        holder.locationview.setText(posts.get(position).getLocation());
 
     }
 
