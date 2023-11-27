@@ -36,7 +36,7 @@ public class EditPostActivity extends AppCompatActivity {
 
     private EditText caption;
 
-    private Button save_button;
+    private Button save_button, backbutton;
 
     private FirebaseFirestore db;
 
@@ -63,6 +63,7 @@ public class EditPostActivity extends AppCompatActivity {
         caption.setText(caption_string);
 
         save_button = findViewById(R.id.update_the_post_button);
+        backbutton = findViewById(R.id.back_button_2);
 
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +123,18 @@ public class EditPostActivity extends AppCompatActivity {
                 //Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 //startActivity(intent);
                 //finish();
+            }
+        });
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+
+
             }
         });
 

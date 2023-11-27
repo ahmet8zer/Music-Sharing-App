@@ -51,7 +51,7 @@ public class AddPostActivity extends AppCompatActivity {
 
     private Button mPostButton;
 
-    private Button mFindSongButton;
+    private Button mFindSongButton, backbutton;
 
     private Button mLocationButton;
     private LocationRequest locationRequest;
@@ -74,6 +74,19 @@ public class AddPostActivity extends AppCompatActivity {
         mLocationButton = (Button) findViewById(R.id.get_location_button);
         mSongSelect = findViewById(R.id.add_post_song);
         mFindSongButton =(Button) findViewById(R.id.search_song_button);
+        backbutton = findViewById(R.id.back_button_1);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+
+
+            }
+        });
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
@@ -237,4 +250,6 @@ public class AddPostActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

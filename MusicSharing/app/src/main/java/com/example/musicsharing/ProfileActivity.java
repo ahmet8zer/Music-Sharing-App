@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity implements MyViewHolder.OnItemClickListener{
 
-    private Button mEditProfileButton, mDeleteProfileButton, mAddPostButton;
+    private Button mEditProfileButton, mDeleteProfileButton, mAddPostButton, mLogoutButton;
 
     private TextView mDisplayName;
 
@@ -56,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements MyViewHolder.O
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
+        mLogoutButton = findViewById(R.id.logout_button);
 
         RecyclerView rv = findViewById(R.id.rvPosts);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -113,6 +114,16 @@ public class ProfileActivity extends AppCompatActivity implements MyViewHolder.O
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
