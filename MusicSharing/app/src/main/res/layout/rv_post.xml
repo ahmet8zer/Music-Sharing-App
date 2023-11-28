@@ -7,9 +7,9 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
-    app:cardCornerRadius="28dp"
+    app:cardCornerRadius="25dp"
     android:elevation="4dp"
-    app:cardBackgroundColor="#dfdfdf">
+    app:cardBackgroundColor="#efefef">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginRight="62dp"
                 android:id="@+id/songname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,14 +73,16 @@
 
         <Button
             android:id="@+id/three_dots_button"
-            android:text="x"
+            android:text="X"
+            android:textAlignment="gravity"
             android:backgroundTint="#cc2222"
-            android:textSize="6sp"
-            android:layout_marginStart="-50dp"
+            android:textSize="13sp"
+            android:layout_marginStart="-60dp"
+            android:layout_marginTop="-2dp"
             android:layout_toEndOf="@id/info"
-            android:layout_height="30dp"
+            android:layout_height="37dp"
 
-            android:layout_width="50dp"/>
+            android:layout_width="60dp"/>
 
 
 
