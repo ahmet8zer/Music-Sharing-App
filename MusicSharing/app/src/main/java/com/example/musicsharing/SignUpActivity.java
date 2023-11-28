@@ -56,8 +56,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(SignUpActivity.this, "Please provide an email", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(SignUpActivity.this, "Please provide a password", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(password) || !password.matches("^(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{6,}$")) {
+                    Toast.makeText(SignUpActivity.this, "Password must be 6 characters in length and contain a special character and number", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
