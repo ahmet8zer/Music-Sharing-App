@@ -101,22 +101,23 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         if (user != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+            long startTime = System.currentTimeMillis();
 
             // Delete from Firestore based on position that it loaded them in in
             db.collection("users").document(user.getUid())
                     .collection("posts")
+                    .whereEqualTo("title",nameview.getText().toString())
+                    .whereEqualTo("caption", captionview.getText().toString())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            int i = 0;
 
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                if (i==position) {
-                                    document.getReference().delete();
-                                }
-                                i+=1;
+                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                                queryDocumentSnapshots.getDocuments().get(0).getReference().delete();
                             }
+                            long totaltime = System.currentTimeMillis()-startTime;
+
                             profileActivity.onDeleteClick();
 
                         }
